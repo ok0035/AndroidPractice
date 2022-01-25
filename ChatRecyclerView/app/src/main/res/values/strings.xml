@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ChatRecyclerView</string>
+    <string name="please_input">please input chat content</string>
+</resources>
