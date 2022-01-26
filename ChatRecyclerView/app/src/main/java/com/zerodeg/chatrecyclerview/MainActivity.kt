@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), ChatInterface, View.OnClickListener, V
     private lateinit var chatAdapter: ChatAdapter
 
     // Write a message to the database
-    private val database = Firebase.database
+    private val database = Firebase.database("https://chatapptest-9433d-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val myRef = database.getReference("message")
     lateinit var binding: ActivityMainBinding
 
@@ -82,7 +82,8 @@ class MainActivity : AppCompatActivity(), ChatInterface, View.OnClickListener, V
         val postListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
-                val post = dataSnapshot.getValue<String>()
+                val post = dataSnapshot.value
+                Log.d(TAG, "postListener called")
                 Log.d(TAG, "onDataChange: ${post.toString()}")
                 // ...
             }
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity(), ChatInterface, View.OnClickListener, V
             }
         }
 
-        database.reference.addValueEventListener(postListener)
+        database.getReference("chat").addValueEventListener(postListener)
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -119,8 +120,9 @@ class MainActivity : AppCompatActivity(), ChatInterface, View.OnClickListener, V
     }
 
     fun writeMessage(name: String, content: String) {
+        Log.d(TAG, "writeMessage : " + content)
         val chatData = ChatData(name, content)
-        database.reference.child("chat").setValue(chatData)
+        database.getReference("chat").setValue(chatData)
         myRef.setValue(content)
     }
 
