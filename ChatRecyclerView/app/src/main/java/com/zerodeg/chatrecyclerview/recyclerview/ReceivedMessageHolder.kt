@@ -6,8 +6,10 @@ import com.bumptech.glide.Glide
 import com.zerodeg.chatrecyclerview.App
 import com.zerodeg.chatrecyclerview.R
 import com.zerodeg.chatrecyclerview.databinding.ChatItemBinding
+import com.zerodeg.chatrecyclerview.databinding.ChatItemForReceiveBinding
+import com.zerodeg.chatrecyclerview.model.ChatModel
 
-class ChatViewHolder(itemView: View, iChat: ChatInterface) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+class ReceivedMessageHolder(itemView: View, iChat: ChatInterface) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
     /*
     * 의문점,
@@ -16,7 +18,7 @@ class ChatViewHolder(itemView: View, iChat: ChatInterface) : RecyclerView.ViewHo
     * 아마도 viewBinding을 쓰냐 혹은 kotlin-extension을 사용하냐의 차이일듯?
     * */
 
-    private var item :ChatItemBinding? = ChatItemBinding.bind(itemView)
+    private var item :ChatItemForReceiveBinding? = ChatItemForReceiveBinding.bind(itemView)
     private var iChat : ChatInterface? = null
 
     private val profile = item?.ivProfile
@@ -32,15 +34,16 @@ class ChatViewHolder(itemView: View, iChat: ChatInterface) : RecyclerView.ViewHo
         this.iChat?.clickChatItem(absoluteAdapterPosition)
     }
 
-    fun bind(model:ChatModel) {
+    fun bind(model: ChatModel) {
         name?.text = model.name
         content?.text = model.content
-        Glide
-            .with(App.instance)
-            .load(model.profile)
-            .centerCrop()
-            .placeholder(R.mipmap.ic_launcher)
-            .into(profile!!);
+//
+//        Glide
+//            .with(App.instance)
+//            .load(model.profile)
+//            .centerCrop()
+//            .placeholder(R.mipmap.ic_launcher)
+//            .into(profile!!);
     }
 
 
